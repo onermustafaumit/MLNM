@@ -139,7 +139,7 @@ The labels (3:'benign', 4:'tangential_benign') of glands in the patch "0.png" (.
 4
 ```
 
-The machine learning dataset been deposited at Zenodo under the https://doi.org/10.5281/zenodo.5971764 and is publicly available.
+The machine learning dataset has been deposited at Zenodo under the https://doi.org/10.5281/zenodo.5971764 and is publicly available.
 
 
 ## Gland Segmentation
