@@ -1,0 +1,22 @@
+# slide_ids
+patient_014526_slide_01
+patient_061590_slide_01
+patient_074988_slide_01
+patient_044909_slide_01
+patient_082465_slide_01
+patient_098407_slide_01
+patient_078281_slide_01
+patient_099979_slide_01
+patient_053608_slide_01
+patient_064305_slide_01
+patient_068916_slide_01
+patient_025846_slide_01
+patient_022303_slide_01
+patient_094825_slide_01
+patient_061545_slide_01
+patient_041817_slide_01
+patient_074186_slide_01
+patient_037520_slide_01
+patient_038391_slide_01
+patient_080965_slide_01
+patient_013336_slide_01
