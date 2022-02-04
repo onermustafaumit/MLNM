@@ -51,9 +51,9 @@ def str2bool(v):
 parser = argparse.ArgumentParser(description='Train Mask R-CNN to segment glands in cropped patches')
 
 parser.add_argument('--init_model_file', default='',help='File path of Mask R-CNN model to be loaded at the start of training (optional)', dest='init_model_file')
-parser.add_argument('--image_dir', default='../../Images/cropped_patches__complete_and_partial_glands__50__50__512/', help='Directory consisting of cropped patches with centred glands', dest='image_dir')
-parser.add_argument('--slide_list_filename_train', default='../dataset/slide_ids_list_gland_segmentation_train.txt', help='List of slide ids in training set', dest='slide_list_filename_train')
-parser.add_argument('--slide_list_filename_valid', default='../dataset/slide_ids_list_gland_segmentation_valid.txt', help='List of slide ids in validation set', dest='slide_list_filename_valid')
+parser.add_argument('--image_dir', default='../../Images/gland_segmentation/cropped_patches__complete_and_partial_glands_50_50_512/', help='Directory consisting of cropped patches with centred glands', dest='image_dir')
+parser.add_argument('--slide_list_filename_train', default='../dataset/slide_ids_list_gland_segmentation_99_slides_train_saved.txt', help='List of slide ids in training set', dest='slide_list_filename_train')
+parser.add_argument('--slide_list_filename_valid', default='../dataset/slide_ids_list_gland_segmentation_99_slides_valid_saved.txt', help='List of slide ids in validation set', dest='slide_list_filename_valid')
 parser.add_argument('--patch_size', type=int, default=512, help='Patch size', dest='patch_size')
 parser.add_argument('--num_classes', type=int, default=1, help='Number of classes', dest='num_classes')
 parser.add_argument('--pretrained', type=str2bool, default=False, help=' Use pretrained model on COCO dataset?', dest='pretrained')
