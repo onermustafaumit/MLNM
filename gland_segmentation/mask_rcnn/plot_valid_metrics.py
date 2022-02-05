@@ -67,7 +67,7 @@ ax[1].set_ylabel('Precision or Recall')
 # plt.tight_layout()
 
 fig.subplots_adjust(left=0.07, bottom=0.15, right=0.99, top=0.91, wspace=0.20 ,hspace=0.20 )
-fig.savefig('{}.png'.format(FLAGS.data_file[:-4]),dpi=200,transparent=True)
+fig.savefig('{}.png'.format(FLAGS.data_file[:-4]),dpi=200,transparent=False)
 
 plt.show()
 

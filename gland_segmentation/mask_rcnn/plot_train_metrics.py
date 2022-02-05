@@ -49,6 +49,6 @@ plt.grid(linestyle='--')
 plt.legend()
 
 fig.subplots_adjust(left=0.12, bottom=0.15, right=0.98, top=0.98, wspace=0.20 ,hspace=0.20 )
-fig.savefig('{}.png'.format(FLAGS.data_file[:-4]),dpi=200,transparent=True)
+fig.savefig('{}.png'.format(FLAGS.data_file[:-4]),dpi=200,transparent=False)
 
 plt.show()

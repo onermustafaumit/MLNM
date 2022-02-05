@@ -206,7 +206,7 @@ saved_metrics
 To plot training loss over the epochs:
 
 ```console
-python plot_train_metrics.py saved_metrics/step_train_metrics__2022_01_24__22_09_12.txt
+python plot_train_metrics.py --data_file saved_metrics/step_train_metrics__2022_01_24__22_09_12.txt
 ```
 
 <img src="_images/step_train_metrics__2022_01_24__22_09_12.png" alt="alt text" width="300"/>
@@ -214,7 +214,7 @@ python plot_train_metrics.py saved_metrics/step_train_metrics__2022_01_24__22_09
 To plot precision and recall on the validation set over the epochs:
 
 ```console
-python plot_valid_metrics.py saved_metrics/step_valid_metrics__2022_01_24__22_09_12.txt
+python plot_valid_metrics.py --data_file saved_metrics/step_valid_metrics__2022_01_24__22_09_12.txt
 ```
 
 <img src="_images/step_valid_metrics__2022_01_24__22_09_12.png" alt="alt text" width="600"/>
