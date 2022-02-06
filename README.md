@@ -1,5 +1,7 @@
 # Multi-lens Neural Machine (MLNM)
 
+[![DOI](https://zenodo.org/badge/455652030.svg)](https://zenodo.org/badge/latestdoi/455652030)
+
 This repository is the official implementation of [An AI-assisted Tool For Efficient Prostate Cancer Diagnosis](https://paper_link). 
 
 
