@@ -2,8 +2,9 @@
 
 [![DOI](https://zenodo.org/badge/455652030.svg)](https://zenodo.org/badge/latestdoi/455652030)
 
-This repository is the official implementation of [An AI-assisted Tool For Efficient Prostate Cancer Diagnosis](https://paper_link). 
+This repository is the official implementation of the paper: [An AI-assisted Tool For Efficient Prostate Cancer Diagnosis](https://www.biorxiv.org/content/10.1101/2022.02.06.479283v1). 
 
+It uses the data: [Digital Pathology Dataset for Prostate Cancer Diagnosis](https://doi.org/10.5281/zenodo.5971764).
 
 We developed a multi-lens (or multi-resolution) deep learning pipeline detecting malignant glands in core needle biopsies of low-grade prostate cancer to assist pathologists in diagnosis. The pipeline consisted of two stages: the gland segmentation model detected the glands within the sections and the multi-lens model classified each detected gland into benign vs. malignant. The multi-lens model exploited both morphology information (of nuclei and glands from high resolution images - 40× and 20×) and neighborhood information (for architectural patterns from low resolution images - 10× and 5×), important in prostate gland classification. 
 
