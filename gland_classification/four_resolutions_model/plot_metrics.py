@@ -73,7 +73,7 @@ plt.grid(linestyle='--')
 plt.legend(labelspacing=.1,columnspacing=.5, handletextpad=0.5, fontsize=8)
 
 fig.subplots_adjust(left=0.13, bottom=0.15, right=0.99, top=0.99, wspace=0.20 ,hspace=0.20 )
-fig.savefig('{}.png'.format(FLAGS.data_file[:-4]),dpi=200,transparent=False)
+fig.savefig('{}.png'.format(FLAGS.data_file[:-4]),dpi=200,transparent=True)
 
 plt.show()
 

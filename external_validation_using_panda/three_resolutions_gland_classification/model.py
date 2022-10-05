@@ -36,7 +36,6 @@ class Model(nn.Module):
             feature extractors. Default: 64
     """
 
-
     def __init__(self, pretrained=False, num_classes=2, num_intermediate_features=64):
         super().__init__()
         self.pretrained = pretrained
@@ -45,17 +44,15 @@ class Model(nn.Module):
         self.resnet_high = ResNet(pretrained, num_classes, num_intermediate_features)
         self.resnet_medium = ResNet(pretrained, num_classes, num_intermediate_features)
         self.resnet_low = ResNet(pretrained, num_classes, num_intermediate_features)
-        self.resnet_low2 = ResNet(pretrained, num_classes, num_intermediate_features)
         self.fc3 = nn.Linear(num_intermediate_features, 10)
         self.fc4 = nn.Linear(10, num_classes)
         self.dropout_high = nn.Dropout(0.5)
         self.dropout_medium = nn.Dropout(0.5)
         self.dropout_low = nn.Dropout(0.5)
-        self.dropout_low2 = nn.Dropout(0.5)
         self.dropout_result = nn.Dropout(0.5)
         self.dropout_fc3 = nn.Dropout(0.5)
         
-    def forward(self, x_high, x_medium, x_low, x_low2):
+    def forward(self, x_high, x_medium, x_low):
         feature_vec_high, class_score_vec_high = self.resnet_high(x_high)
         feature_vec_high = self.dropout_high(feature_vec_high)
 
@@ -65,15 +62,12 @@ class Model(nn.Module):
         feature_vec_low, class_score_vec_low = self.resnet_low(x_low)
         feature_vec_low = self.dropout_low(feature_vec_low)
 
-        feature_vec_low2, class_score_vec_low2 = self.resnet_low2(x_low2)
-        feature_vec_low2 = self.dropout_low2(feature_vec_low2)
-
-        feature_vec = feature_vec_high + feature_vec_medium + feature_vec_low + feature_vec_low2
+        feature_vec = feature_vec_high + feature_vec_medium + feature_vec_low
         feature_vec = self.dropout_result(feature_vec)
         feature_vec = self.fc3(feature_vec)
         feature_vec = self.dropout_fc3(feature_vec)
         class_score_vec = self.fc4(feature_vec)
         
-        return class_score_vec_high, class_score_vec_medium, class_score_vec_low, class_score_vec_low2, class_score_vec
+        return class_score_vec_high, class_score_vec_medium, class_score_vec_low, class_score_vec
 
         

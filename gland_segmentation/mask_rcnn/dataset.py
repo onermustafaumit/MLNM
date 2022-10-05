@@ -11,6 +11,19 @@ from transformations import rotate, center_crop, horizontal_flip, vertical_flip,
 
 
 class Dataset(torch.utils.data.Dataset):
+    """
+    Creates an instance segmentation dataset using cropped patches. 
+
+    Args:
+        root (str): path to directory storing cropped patches
+        slide_list_filename (str): path to text file containing slide ids that 
+            will be used to create the dataset
+        transforms (bool): flag controlling if some transformations will be applied 
+            on the patches for data augmentation. 
+            True: apply transformations, False: no transformations
+
+    """
+    
     def __init__(self, root=None, slide_list_filename=None, transforms=None):
         self.root = root
         self.transforms = transforms
@@ -95,7 +108,8 @@ class Dataset(torch.utils.data.Dataset):
 
         assert labels.shape[0] == len(binary_masks_list), 'length of label list is different from length of binary mask list'
         
-                          
+        
+        # if flag is true, we apply some random transformations for data augmentation                  
         if self.transforms:
             if random.random() > 0.5:
                 img, binary_masks_list, labels = horizontal_flip(img, binary_masks_list, labels)

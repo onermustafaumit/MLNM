@@ -9,9 +9,19 @@ from torchvision.transforms import functional as F
 import matplotlib.pyplot as plt
 
 class Dataset(torch.utils.data.Dataset):
-	def __init__(self, root=None, slide_list_filename=None, transforms=None):
+	"""
+    Creates a dataset for inference using the trained instance segmentation model. 
+    Only H&E patches are required for inference. 
+
+    Args:
+        root (str): path to directory storing cropped H&E patches
+        slide_list_filename (str): path to text file containing slide ids that 
+            will be used to create the dataset
+
+    """
+
+	def __init__(self, root=None, slide_list_filename=None):
 		self.root = root
-		self.transforms = transforms
 		self._num_slides, self._img_paths = self.read_slide_list(slide_list_filename)
 		self._num_imgs = len(self._img_paths)
 

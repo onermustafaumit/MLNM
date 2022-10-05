@@ -22,6 +22,21 @@ from tqdm import tqdm
 
 
 def get_instance_segmentation_model(num_classes, pretrained, pretrained_backbone, trainable_backbone_layers):
+    """
+    Returns a Mask R-CNN model with specified properties. 
+
+    Args:
+        num_classes (int): number of output classes of the model (including the background)
+        pretrained (bool): If True, returns a model pre-trained on COCO train2017
+        pretrained_backbone (bool): If True, returns a model with backbone pre-trained on Imagenet
+        trainable_backbone_layers (int): number of trainable (not frozen) resnet layers starting from final block.
+            Valid values are between 0 and 5, with 5 meaning all backbone layers are trainable.
+  
+    Returns:
+        Mask R-CNN model
+
+    """
+    
     # load an instance segmentation model pre-trained on COCO
     model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=pretrained, pretrained_backbone=pretrained_backbone, trainable_backbone_layers=trainable_backbone_layers)
 
@@ -54,7 +69,7 @@ annotation_group_color_dict = {'1': [255, 0, 0],
                                '3': [0, 0, 255],
                                '4': [255, 255, 0]}
 
-parser = argparse.ArgumentParser(description='Gland detection at the slide level')
+parser = argparse.ArgumentParser(description='Inference with a trained Mask R-CNN model segmenting glands in cropped patches')
 
 parser.add_argument('--init_model_file', default='', help='File path of trained Mask R-CNN model', dest='init_model_file')
 parser.add_argument('--image_dir', default='../../Images/gland_segmentation/cropped_patches__complete_and_partial_glands_50_50_512/', help='Directory consisting of cropped patches with centred glands', dest='image_dir')

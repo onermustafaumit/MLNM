@@ -8,6 +8,21 @@ import torchvision.transforms.functional as TF
 
 
 class Dataset(torch.utils.data.Dataset):
+    """
+    Creates a multi-resolution gland classification dataset using cropped patches. 
+
+    Args:
+        img_dir_high (str): path to directory storing cropped 40x patches
+        img_dir_medium (str): path to directory storing cropped 20x patches
+        img_dir_low (str): path to directory storing cropped 10x patches
+        img_dir_low2 (str): path to directory storing cropped 5x patches
+        slide_list_filename (str): path to text file containing slide ids that 
+            will be used to create the dataset
+        transforms (bool): flag controlling if some transformations will be applied 
+            on the patches for data augmentation. 
+            True: apply transformations, False: no transformations
+    """
+    
     def __init__(self, img_dir_high=None, img_dir_medium=None, img_dir_low=None, img_dir_low2=None, slide_list_filename=None, transforms=False):
         self.img_dir_high = img_dir_high
         self.img_dir_medium = img_dir_medium

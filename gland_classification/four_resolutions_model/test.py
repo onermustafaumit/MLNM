@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 from sklearn import metrics
 
 
-parser = argparse.ArgumentParser(description='Train a CNN to classify image patches into different genetic ITH groups')
+parser = argparse.ArgumentParser(description='Test a trained multi-resolution gland classification model.')
 
 parser.add_argument('--init_model_file', default='',help='Initial model file (optional)', dest='init_model_file')
 parser.add_argument('--image_dir_high', default='../../Images/gland_classification/cropped_patches__complete_and_partial_glands_50_25_512', help='Image directory', dest='image_dir_high')

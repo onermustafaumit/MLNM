@@ -1,10 +1,7 @@
 # Multi-lens Neural Machine (MLNM)
 
-[![DOI](https://zenodo.org/badge/455652030.svg)](https://zenodo.org/badge/latestdoi/455652030)
+This repository is the official implementation of [An AI-assisted Tool For Efficient Prostate Cancer Diagnosis in Low-grade and Low-volume Cases](https://doi.org/10.1101/2022.02.06.479283). 
 
-This repository is the official implementation of the paper: [An AI-assisted Tool For Efficient Prostate Cancer Diagnosis](https://www.biorxiv.org/content/10.1101/2022.02.06.479283v1). 
-
-It uses the data: [Digital Pathology Dataset for Prostate Cancer Diagnosis](https://doi.org/10.5281/zenodo.5971764).
 
 We developed a multi-lens (or multi-resolution) deep learning pipeline detecting malignant glands in core needle biopsies of low-grade prostate cancer to assist pathologists in diagnosis. The pipeline consisted of two stages: the gland segmentation model detected the glands within the sections and the multi-lens model classified each detected gland into benign vs. malignant. The multi-lens model exploited both morphology information (of nuclei and glands from high resolution images - 40× and 20×) and neighborhood information (for architectural patterns from low resolution images - 10× and 5×), important in prostate gland classification. 
 
@@ -15,9 +12,12 @@ Folder structure:
 ```console
 MLNM
 ├── _images
+├── WSIs
 ├── Images
-├── gland_classification
+├── machine_learning_dataset_preparation
 ├── gland_segmentation
+├── gland_classification
+├── external_validation_using_panda
 ├── README.md
 └── requirements.txt
 ```
@@ -29,6 +29,7 @@ We will explain the following steps one-by-one:
 * [Machine Learning Dataset](#machine-learning-dataset)
 * [Gland Segmentation](#gland-segmentation)
 * [Gland Classification](#gland-classification)
+* [External Validation Using PANDA](#external-validation-using-panda)
 
 ## Required Python Packages
 
@@ -48,11 +49,41 @@ Prostate glandular structures in core needle biopsy slides were manually annotat
 
 <img src="_images/WSI_annotation2.png" alt="alt text" width="500"/>
 
+Whole slide image and annotation file for each patient are stored in a seperate folder inside the "WSIs" folder:
+
+```console
+WSIs
+├── patient_018272
+│   ├── patient_018272_slide_01.svs
+│   └── patient_018272_slide_01.xml
+├── patient_027612
+│   ├── patient_027612_slide_01.svs
+│   └── patient_027612_slide_01.xml
+...
+```
+
+WSIs are publicly available in [here](https://doi.org/10.5281/zenodo.5971764).
+
 ## Machine Learning Dataset
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5971764.svg)](https://doi.org/10.5281/zenodo.5971764)
 
-We developed models for the gland segmentation and gland classification tasks using the 99 WSIs. We cropped patches of size 512 × 512 pixels from whole slide images at resolutions 5×, 10×, 20×, and 40× with an annotated gland centered at each patch.
+We developed models for the gland segmentation and gland classification tasks using the 99 WSIs. This part explains cropping patches for machine learning dataset preparation.
+
+Initial content of the folder:
+
+```console
+machine_learning_dataset_preparation
+├── crop_patches_by_using_xml_check_fit.py
+├── crop_patches_by_using_xml_check_fit.sh
+└── slide_ids_list.txt
+```
+
+**To crop patches of size 512 × 512 pixels from whole slide images at resolutions 5×, 10×, 20×, and 40× with an annotated gland centered at each patch:**
+
+```console
+crop_patches_by_using_xml_check_fit.sh
+```
 
 Cropped patches folders were created inside "Images":
 
@@ -182,7 +213,7 @@ patient_032677_slide_01
 ...
 ```
 
-To train the model:
+**To train the model:**
 
 ```console
 python train.py
@@ -206,23 +237,23 @@ saved_metrics
 └── step_valid_metrics__2022_01_24__22_09_12.txt
 ```
 
-To plot training loss over the epochs:
+**To plot training loss over the epochs:**
 
 ```console
-python plot_train_metrics.py --data_file saved_metrics/step_train_metrics__2022_01_24__22_09_12.txt
+python plot_train_metrics.py saved_metrics/step_train_metrics__2022_01_24__22_09_12.txt
 ```
 
 <img src="_images/step_train_metrics__2022_01_24__22_09_12.png" alt="alt text" width="300"/>
 
-To plot precision and recall on the validation set over the epochs:
+**To plot precision and recall on the validation set over the epochs:**
 
 ```console
-python plot_valid_metrics.py --data_file saved_metrics/step_valid_metrics__2022_01_24__22_09_12.txt
+python plot_valid_metrics.py saved_metrics/step_valid_metrics__2022_01_24__22_09_12.txt
 ```
 
 <img src="_images/step_valid_metrics__2022_01_24__22_09_12.png" alt="alt text" width="600"/>
 
-To check the performance of the trained model on the test set:
+**To check the performance of the trained model on the test set:**
 
 ```console
 python test.py --init_model_file saved_models/model_weights__2022_01_24__22_09_12__100.pth
@@ -246,7 +277,7 @@ The "test_metrics__2022_01_24__22_09_12__100.txt" file contained gland-level sta
 0.4360  0.8806  0.4233  -1.0000 0.3913  0.6000  0.1000  0.4875  0.4875  -1.0000 0.4500  0.6000  0.9375  0.5652  0.8806  0.8806  -1.0000 0.5262  0.7505  0.1125  0.6250  0.6250  -1.0000 0.5833  0.7500  0.9375
 ```
 
-To obtain predicted masks from the trained model:
+**To obtain predicted masks from the trained model:**
 
 ```console
 python predict_masks.py --init_model_file saved_models/model_weights__2022_01_24__22_09_12__100.pth
@@ -318,7 +349,7 @@ patient_095406_slide_01
 ...
 ```
 
-To train the model:
+**To train the model:**
 
 ```console
 python train.py
@@ -346,7 +377,7 @@ saved_metrics
 └── test_loss_metrics__2022_01_25__19_37_54.txt
 ```
 
-To plot training and validation loss (accuracy) values over the epochs:
+**To plot training and validation loss (accuracy) values over the epochs:**
 
 ```console
 python plot_metrics.py --data_file saved_metrics/step_loss_metrics__2022_01_25__19_37_54.txt
@@ -355,7 +386,7 @@ python plot_metrics.py --data_file saved_metrics/step_loss_metrics__2022_01_25__
 <img src="_images/step_loss_metrics__2022_01_25__19_37_54.png" alt="alt text" width="300"/>
 
 
-To check the performance of the trained model on the test set:
+**To check the performance of the trained model on the test set:**
 
 ```console
 python test.py --init_model_file saved_models/model_weights__2022_01_25__19_37_54__100.pth
@@ -421,4 +452,158 @@ The ROC curve (ROC__2022_01_25__19_37_54__100.png):
 
 <img src="_images/ROC__2022_01_25__19_37_54__100.png" alt="alt text" width="300"/>
 
+
+## External Validation Using PANDA
+
+To check the generalizability of our multi-resolution approach, we trained a three-resolution benign vs. malignant classification model on the publicly available development set of the [PANDA challenge](https://doi.org/10.1038/s41591-021-01620-2). Then, an external validation study was performed on the Singapore gland classification dataset.
+
+Initial content of the folder:
+
+```console
+├── panda_dataset
+│   ├── panda__karolinska__all.txt
+│   ├── panda__karolinska__all__test.txt
+│   ├── panda__karolinska__all__train.txt
+│   ├── panda__karolinska__all__valid.txt
+│   ├── panda__radboud__all.txt
+│   ├── panda__radboud__all__test.txt
+│   ├── panda__radboud__all__train.txt
+│   ├── panda__radboud__all__valid.txt
+│   ├── panda__radboud__karolinska__all.txt
+│   ├── panda__radboud__karolinska__all__test.txt
+│   ├── panda__radboud__karolinska__all__train.txt
+│   ├── panda__radboud__karolinska__all__valid.txt
+│   ├── slides_with_empty_content.txt
+│   └── slides_without_mask.txt
+└── three_resolutions_gland_classification
+    ├── saved_metrics
+    ├── saved_models
+    ├── dataset_panda.py
+    ├── dataset_test_slide_panda.py
+    ├── model.py
+    ├── train_panda.py
+    ├── test_panda.py
+    ├── process_predictions.py
+    └── slide_classification.py
+```
+
+The files containing list of slide ids in the training, validation, and test sets were stored inside the "panda_dataset" folder. For example, "panda__radboud__karolinska__all__train.txt" stored the list of slide ids in the training set:
+
+```console
+# slide_id  data_provider   isup_grade  gleason_score
+ec89dabdd536396aaad4020141dafbde    radboud 0   negative
+dd4a6b2c2370f47add9ec08e2f7e7458    radboud 0   negative
+9599d5f691b56b56aac30664afa7ef45    radboud 0   negative
+...
+```
+
+**To train the model:**
+
+```console
+python train_panda.py
+```
+
+The model weights were saved into the "saved_models" folder.
+
+```console
+saved_models
+├── model_weights__2022_09_04__04_58_04__216.pth
+...
+```
+
+The performance metrics calculated on the training,validation, and test sets were stored into the "saved_metrics" folder.
+
+```console
+saved_metrics
+├── step_acc_metrics__2022_09_04__04_58_04__216.txt
+├── step_confusion_matrices__2022_09_04__04_58_04__216.txt
+├── step_loss_metrics__2022_09_04__04_58_04__216.txt
+├── test_acc_metrics__2022_09_04__04_58_04__216.txt
+├── test_confusion_matrices__2022_09_04__04_58_04__216.txt
+└── test_loss_metrics__2022_09_04__04_58_04__216.txt
+```
+
+**To check the performance of the trained model on the PANDA test set in the task of benign vs. malignant slide classification:**
+
+```console
+python test_panda.py --init_model_file saved_models/model_weights__2022_09_04__04_58_04__216.pth --slide_list_filename ../panda_dataset/panda__radboud__karolinska__all__test.txt
+```
+
+Prediction scores for individual patches were stored in the "test_scores__2022_09_04__04_58_04__216.txt" inside the "test_metrics__panda" folder:
+
+```console
+test_metrics__panda
+└── 2022_09_04__04_58_04__216
+    └── panda__radboud__karolinska__all__test
+        └── test_scores__2022_09_04__04_58_04__216.txt
+```
+
+Patch-level scores (test_scores__2022_09_04__04_58_04__216.txt):
+
+```console
+# init_model_file: saved_models/model_weights__2022_09_04__04_58_04__216.pth
+# model_name: 2022_09_04__04_58_04__216
+# slide_list_filename: ../panda_dataset/panda__radboud__karolinska__all__test.txt
+# num_classes: 2
+# batch_size: 2
+# metrics_file: test_metrics__panda/2022_09_04__04_58_04__216/panda__radboud__karolinska__all__test/test_scores__2022_09_04__04_58_04__216.txt
+# slide_id  X_cm    Y_cm    prediction  score_benign    score_malignant
+bd9022853225c1e8a46bc9eca27533f0    768 768 0   0.978   0.022
+bd9022853225c1e8a46bc9eca27533f0    1280    768 0   0.978   0.022
+bd9022853225c1e8a46bc9eca27533f0    768 1280    0   0.978   0.022
+bd9022853225c1e8a46bc9eca27533f0    1280    1280    0   0.992   0.008
+bd9022853225c1e8a46bc9eca27533f0    1792    1280    0   0.980   0.020
+...
+```
+
+
+**To process patch-level prediction scores to obtain slide-level scores:**
+
+```console
+python process_predictions.py --predictions_file test_metrics__panda/2022_09_04__04_58_04__216/panda__radboud__karolinska__all__test/test_scores__2022_09_04__04_58_04__216.txt
+```
+
+Slide-level scores were stored in the "test_scores__2022_09_04__04_58_04__216__processed.txt" file inside the same folder:
+
+```console
+test_metrics__panda
+└── 2022_09_04__04_58_04__216
+    └── panda__radboud__karolinska__all__test
+        ├── test_scores__2022_09_04__04_58_04__216.txt
+        └── test_scores__2022_09_04__04_58_04__216__processed.txt
+```
+
+Slide-level scores (test_scores__2022_09_04__04_58_04__216__processed.txt):
+
+```console
+# image_id  data_provider   isup_grade  min_score_malignant max_score_malignant avg_score_malignant
+0005f7aaab2800f6170c399693a96917    karolinska  0   0.0240  0.1760  0.0573
+000920ad0b612851f8e01bcc880d9b3d    karolinska  0   0.0190  0.1460  0.0482
+003d4dd6bd61221ebc0bfb9350db333f    karolinska  1   0.0160  1.0000  0.1641
+004f6b3a66189b4e88b6a01ba19d7d31    karolinska  1   0.0090  1.0000  0.1891
+008069b542b0439ed69b194674051964    radboud 4   0.0020  1.0000  0.4764
+00ee879798782aca1248baa9132d7307    karolinska  1   0.0030  1.0000  0.2024
+...
+```
+
+
+**To obtain ROC curve and calculate AUROC value from slide-level scores:**
+
+```console
+python slide_classification.py --processed_predictions_file test_metrics__panda/2022_09_04__04_58_04__216/panda__radboud__karolinska__all__test/test_scores__2022_09_04__04_58_04__216__processed.txt
+```
+
+```console
+test_metrics__panda
+└── 2022_09_04__04_58_04__216
+    └── panda__radboud__karolinska__all__test
+        ├── test_scores__2022_09_04__04_58_04__216.txt
+        ├── test_scores__2022_09_04__04_58_04__216__processed.txt
+        ├── test_scores__2022_09_04__04_58_04__216__processed__roc.pdf
+        └── test_scores__2022_09_04__04_58_04__216__processed__roc.png
+```
+
+The ROC curve (test_scores__2022_09_04__04_58_04__216__processed__roc.png):
+
+<img src="_images/test_scores__2022_09_04__04_58_04__216__processed__roc.png" alt="alt text" width="300"/>
 
