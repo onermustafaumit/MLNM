@@ -1,5 +1,7 @@
 # Multi-lens Neural Machine (MLNM)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5982397.svg)](https://doi.org/10.5281/zenodo.5982397)
+
 This repository is the official implementation of [An AI-assisted Tool For Efficient Prostate Cancer Diagnosis in Low-grade and Low-volume Cases](https://doi.org/10.1101/2022.02.06.479283). 
 
 
@@ -62,11 +64,11 @@ WSIs
 ...
 ```
 
-WSIs are publicly available in [here](https://doi.org/10.5281/zenodo.5971764).
+WSIs are publicly available in [here](https://doi.org/10.5281/zenodo.5971763).
 
 ## Machine Learning Dataset
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5971764.svg)](https://doi.org/10.5281/zenodo.5971764)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5971763.svg)](https://doi.org/10.5281/zenodo.5971763)
 
 We developed models for the gland segmentation and gland classification tasks using the 99 WSIs. This part explains cropping patches for machine learning dataset preparation.
 
@@ -173,7 +175,7 @@ The labels (3:'benign', 4:'tangential_benign') of glands in the patch "0.png" (.
 4
 ```
 
-The machine learning dataset has been deposited at Zenodo under the https://doi.org/10.5281/zenodo.5971764 and is publicly available.
+The machine learning dataset has been deposited at Zenodo under the https://doi.org/10.5281/zenodo.5971763 and is publicly available.
 
 
 ## Gland Segmentation
