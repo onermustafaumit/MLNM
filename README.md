@@ -45,6 +45,8 @@ pip install -r requirements.txt
 
 ## Singapore Cohort
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5971763.svg)](https://doi.org/10.5281/zenodo.5971763)
+
 Digitized haematoxylin and eosin (H&E)-stained whole-slide-images (WSIs) of 40 prostatectomy and 59 core needle biopsy specimens were collected from 99 prostate cancer patients at Tan Tock Seng Hospital, Singapore. There were 99 WSIs in total such that each specimen had one WSI. H&E-stained slides were scanned at 40× magnification (specimen-level pixel size 0.25μm × 0.25μm).
 
 Prostate glandular structures in core needle biopsy slides were manually annotated and classified into four classes, benign, malignant, unknown and artifact, using [the ASAP annotation tool](https://computationalpathologygroup.github.io/ASAP/). A senior pathologist reviewed 10% of the annotations in each slide, ensuring that some reference annotations were provided to the researcher at different regions of the core. Note that partial glands appearing at the edges of the biopsy cores were not annotated.
@@ -64,11 +66,9 @@ WSIs
 ...
 ```
 
-WSIs are publicly available in [here](https://doi.org/10.5281/zenodo.5971763).
+WSIs have been deposited at Zenodo under the https://doi.org/10.5281/zenodo.5971763 and are publicly available.
 
 ## Machine Learning Dataset
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5971763.svg)](https://doi.org/10.5281/zenodo.5971763)
 
 We developed models for the gland segmentation and gland classification tasks using the 99 WSIs. This part explains cropping patches for machine learning dataset preparation.
 
